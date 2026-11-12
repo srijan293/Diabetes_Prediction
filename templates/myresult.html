@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Prediction Result | DiabetesCare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #f3f7f8;
+        --card: #ffffff;
+        --text: #18313a;
+        --muted: #71858d;
+        --border: #e2ebed;
+        --primary: #087f8c;
+        --accent-bg: #e8f7f6;
+        --shadow: 0 15px 45px rgba(24, 49, 58, 0.07);
+      }
+
+      body.dark {
+        --bg: #101c24;
+        --card: #192932;
+        --text: #edf7f8;
+        --muted: #a0b4bd;
+        --border: #344a55;
+        --primary: #36c5bd;
+        --accent-bg: #203e42;
+        --shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        display: flex;
+        flex-direction: column;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+
+      .navbar {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0 25px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-icon {
+        width: 43px;
+        height: 43px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px;
+        background: var(--accent-bg);
+        color: var(--primary);
+        font-size: 23px;
+        font-weight: 800;
+      }
+
+      .brand-name {
+        font-family: "Manrope", sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .brand-sub {
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 2px;
+      }
+
+      .theme-btn {
+        padding: 10px 15px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .result-wrapper {
+        flex: 1;
+        display: grid;
+        place-items: center;
+      }
+
+      .result-card {
+        width: 100%;
+        max-width: 560px;
+        padding: 42px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      .result-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--accent-bg);
+        color: var(--primary);
+        font-size: 34px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 30px;
+        background: var(--accent-bg);
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+      }
+
+      h1 {
+        font-family: "Manrope", sans-serif;
+        font-size: 30px;
+        font-weight: 800;
+        margin-bottom: 12px;
+      }
+
+      .description {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+      }
+
+      .result-label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      .prediction {
+        display: block;
+        padding: 19px 15px;
+        margin-bottom: 23px;
+        border-radius: 12px;
+        background: var(--accent-bg);
+        color: var(--primary);
+        font-family: "Manrope", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+      }
+
+      .medical-note {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        text-align: left;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+      }
+
+      .medical-note strong {
+        color: var(--primary);
+      }
+
+      .button {
+        display: inline-block;
+        padding: 14px 27px;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.25s;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        filter: brightness(0.95);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px 10px 5px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 15px;
+        }
+
+        .result-card {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 25px;
+        }
+
+        .prediction {
+          font-size: 21px;
+        }
+
+        .theme-btn {
+          padding: 9px 11px;
+          font-size: 11px;
+        }
+
+        .brand-name {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="brand">
+        <div class="brand-icon">+</div>
+
+        <div>
+          <div class="brand-name">DiabetesCare</div>
+          <div class="brand-sub">Health Risk Assessment</div>
+        </div>
+      </div>
+
+      <button class="theme-btn" id="themeToggle" type="button">
+        🌙 Dark Mode
+      </button>
+    </nav>
+
+    <main class="result-wrapper">
+      <section class="result-card">
+        <div class="result-icon">♡</div>
+
+        <span class="badge"> Assessment Completed </span>
+
+        <h1>Prediction Result</h1>
+
+        <p class="description">
+          Your health parameters have been processed by our machine learning
+          model.
+        </p>
+
+        <p class="result-label">Your model prediction</p>
+
+        <div class="prediction">{{ prediction }}</div>
+
+        <div class="medical-note">
+          <strong>Important Medical Information</strong>
+
+          <br />
+
+          This result is an educational machine learning estimate, not a
+          confirmed medical diagnosis. Please consult a qualified healthcare
+          professional for proper testing and medical interpretation.
+        </div>
+
+        <a href="/" class="button"> ← New Assessment </a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      DiabetesCare · Machine Learning Health Assessment
+    </footer>
+
+    <script>
+      const toggle = document.getElementById("themeToggle");
+
+      const savedTheme = localStorage.getItem("diabetes-theme");
+
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+      }
+
+      function updateButton() {
+        if (document.body.classList.contains("dark")) {
+          toggle.innerHTML = "☀️ Light Mode";
+        } else {
+          toggle.innerHTML = "🌙 Dark Mode";
+        }
+      }
+
+      updateButton();
+
+      toggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark");
+
+        const isDark = document.body.classList.contains("dark");
+
+        localStorage.setItem("diabetes-theme", isDark ? "dark" : "light");
+
+        updateButton();
+      });
+    </script>
+  </body>
+</html>
